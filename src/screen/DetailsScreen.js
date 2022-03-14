@@ -5,6 +5,7 @@ import { appTheme } from '../appTheme'
 import { Fontisto } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { getNewsUrl } from '../redux/selectedNewsSlice'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const DetailsScreen = ({ route }) => {
@@ -14,7 +15,18 @@ const DetailsScreen = ({ route }) => {
 
     useEffect(() => {
         dispatch(getNewsUrl(details.newsUrl))
+        storeData(details)
     }, [])
+
+
+    const storeData = async (values) => {
+        try {
+            const jsonValue = JSON.stringify(values)
+            await AsyncStorage.setItem('@news_List', jsonValue)
+        } catch (e) {
+            // saving error
+        }
+    }
 
 
     return (

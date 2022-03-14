@@ -5,6 +5,8 @@ import { appTheme } from '../appTheme'
 import NewsItem from './NewsItem'
 import { Ionicons } from '@expo/vector-icons';
 import { getNews } from '../redux/newsSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const NewsList = () => {
@@ -17,7 +19,20 @@ const NewsList = () => {
 
     useEffect(() => {
         dispatch(getNews())
+        getData()
     }, [dispatch])
+
+
+    const getData = async () => {
+        try {
+            const jsonValue = await AsyncStorage.getItem('@news_List')
+            console.log(JSON.parse(jsonValue))
+            return jsonValue != null ? JSON.parse(jsonValue) : null;
+
+        } catch (e) {
+            // error reading value
+        }
+    }
 
     useEffect(() => {
         if (+categoryId == 0) {
