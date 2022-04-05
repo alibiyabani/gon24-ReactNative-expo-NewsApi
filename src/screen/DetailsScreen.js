@@ -1,32 +1,38 @@
 import { StyleSheet, Text, View, ScrollView, Image, Pressable } from 'react-native'
 import { useDispatch } from 'react-redux';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { appTheme } from '../appTheme'
 import { Fontisto } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { getNewsUrl } from '../redux/selectedNewsSlice'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AdMobBanner } from 'expo-ads-admob';
+
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const DetailsScreen = ({ route }) => {
+    const [admobeState, setAdmobeState] = useState(true)
     const navigation = useNavigation();
     const dispatch = useDispatch()
     const { details } = route.params;
 
     useEffect(() => {
         dispatch(getNewsUrl(details.newsUrl))
-        storeData(details)
+        //storeData(details)
     }, [])
 
-
-    const storeData = async (values) => {
-        try {
-            const jsonValue = JSON.stringify(values)
-            await AsyncStorage.setItem('@news_List', jsonValue)
-        } catch (e) {
-            // saving error
-        }
+    const hideAdmobe = () => {
+        setAdmobeState(false)
     }
+
+    // const storeData = async (values) => {
+    //     try {
+    //         const jsonValue = JSON.stringify(values)
+    //         await AsyncStorage.setItem('@news_List', jsonValue)
+    //     } catch (e) {
+    //         // saving error
+    //     }
+    // }
 
 
     return (
@@ -41,6 +47,16 @@ const DetailsScreen = ({ route }) => {
                 <Text style={styles.description}>{details.description}</Text>
                 <Text style={styles.body}>{details.body}</Text>
             </ScrollView>
+            {admobeState &&
+                <View style={styles.adMob}>
+                    <AdMobBanner
+                        bannerSize="BANNER"
+                        adUnitID="ca-app-pub-7078093402554807/1621765327"
+                        servePersonalizedAds
+                        onDidFailToReceiveAdWithError={hideAdmobe}
+                    />
+                </View>
+            }
         </View>
     )
 }
@@ -96,6 +112,11 @@ const styles = StyleSheet.create({
         backgroundColor: appTheme.colors.background,
         marginBottom: 10,
         fontSize: 12,
-    }
+    },
+    adMob: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: appTheme.colors.background,
+    },
 
 })

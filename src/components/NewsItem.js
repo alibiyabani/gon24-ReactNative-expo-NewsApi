@@ -4,6 +4,7 @@ import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 import { appTheme } from '../appTheme';
 
+
 const NewsItem = ({ content }) => {
     const navigation = useNavigation();
 

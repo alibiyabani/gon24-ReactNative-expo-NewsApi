@@ -14,9 +14,8 @@ const NewsList = () => {
     const dispatch = useDispatch();
     const news = useSelector(state => state.news.newsItems)
     const [newsData, setNewsDate] = useState(news)
+    const [admobeState, setAdmobeState] = useState(true)
     const [refreshing, setRefreshing] = useState(false);
-    const [adMobState, setAdmobeState] = useState(true)
-
     const isLoading = useSelector(state => state.news.isLoading)
     const categoryId = useSelector(state => state.selectedCategoryId.catId)
 
@@ -83,14 +82,16 @@ const NewsList = () => {
                     refreshControl={<RefreshControl refreshing={refreshing} onRefresh={reloudList} colors={[appTheme.colors.primary]} />
                     }
                 />
-                <View style={styles.adMob}>
-                    <AdMobBanner
-                        bannerSize="BANNER"
-                        adUnitID="ca-app-pub-7078093402554807/1621765327"
-                        servePersonalizedAds
-                        onDidFailToReceiveAdWithError={hideAdmobe}
-                    />
-                </View>
+                {admobeState &&
+                    <View style={styles.adMob}>
+                        <AdMobBanner
+                            bannerSize="BANNER"
+                            adUnitID="ca-app-pub-7078093402554807/1621765327"
+                            servePersonalizedAds
+                            onDidFailToReceiveAdWithError={hideAdmobe}
+                        />
+                    </View>
+                }
             </View>
         )
     }
@@ -101,15 +102,16 @@ const NewsList = () => {
                 data={newsData}
                 renderItem={({ item, index }) => <NewsItem key={index} content={item} />}
                 keyExtractor={(item, index) => index.toString()} />
-
-            <View style={styles.adMob}>
-                <AdMobBanner
-                    bannerSize="BANNER"
-                    adUnitID="ca-app-pub-7078093402554807/1621765327"
-                    servePersonalizedAds
-                    onDidFailToReceiveAdWithError={hideAdmobe}
-                />
-            </View>
+            {admobeState &&
+                <View style={styles.adMob}>
+                    <AdMobBanner
+                        bannerSize="BANNER"
+                        adUnitID="ca-app-pub-7078093402554807/1621765327"
+                        servePersonalizedAds
+                        onDidFailToReceiveAdWithError={hideAdmobe}
+                    />
+                </View>
+            }
         </View>
     )
 }

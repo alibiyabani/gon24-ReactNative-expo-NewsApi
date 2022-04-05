@@ -9,16 +9,18 @@ import Netinfo from '@react-native-community/netinfo';
 import AppNavigation from './src/AppNavigation'
 import { appTheme } from './src/appTheme';
 
-const Toast = ({ visible, message }) => {
-  if (visible) {
-    ToastAndroid.showWithGravityAndOffset(message, ToastAndroid.CENTER, ToastAndroid.CENTER, 100, 100);
-    return null;
-  }
-  return null;
-};
+
 
 export default function App() {
   const [connection, setConnection] = useState(true)
+
+  const Toast = ({ visible, message }) => {
+    if (!visible) {
+      ToastAndroid.showWithGravityAndOffset(message, ToastAndroid.CENTER, ToastAndroid.CENTER, 100, 100);
+      return null;
+    }
+    return null;
+  };
 
   const netState = async () => {
     const netinfo = await Netinfo.fetch();
@@ -33,7 +35,7 @@ export default function App() {
     <Provider store={rootStore}>
       <NavigationContainer>
         <StatusBar backgroundColor={appTheme.colors.primary} barStyle='dark' />
-        <Toast visible={connection} message="Check your Internet Access" />
+        <Toast visible={connection} message="Check your Internet Connection" />
         <AppNavigation />
       </NavigationContainer>
     </Provider>

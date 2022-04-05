@@ -1,6 +1,6 @@
 export const appTheme = {
   colors: {
-    primary: '#283593',
+    primary: '#105fa0',
     secondary: '#627594',
     background: '#E9ECEF',
     shadow: '#A7A8AE',

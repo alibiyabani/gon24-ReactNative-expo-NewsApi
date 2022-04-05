@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Share, Pressable } from 'react-native';
+import { Share, Pressable, Image, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import NewsScreen from './screen/NewsScreen'
 import DetailsScreen from './screen/DetailsScreen';
@@ -36,12 +36,18 @@ const AppNavigation = () => {
             screenOptions={{ headerStyle: { backgroundColor: appTheme.colors.primary }, headerTintColor: '#fff' }}>
             <Stack.Screen name="Home" component={NewsScreen}
                 options={{
-                    title: 'GON24', headerRight: () => (
-                        <Pressable onPress={navigationToSearchHandler}>
-                            < AntDesign name="search1" size={24} color="#fff" />
-                        </Pressable>
-                    )
+                    headerRight: () => (
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Image style={{ width: 135, height: 25, resizeMode: 'contain' }} source={require('../assets/Logo_header.png')} />
+
+                            <Pressable onPress={navigationToSearchHandler}>
+                                < AntDesign name="search1" size={24} color="#fff" />
+                            </Pressable>
+                        </View>
+                    ),
+                    title: ''
                 }}
+
             />
             <Stack.Screen name="DetailsScreen" component={DetailsScreen}
                 options={{
