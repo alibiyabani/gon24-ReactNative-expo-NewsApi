@@ -50,10 +50,11 @@ const DetailsScreen = ({ route }) => {
             {admobeState &&
                 <View style={styles.adMob}>
                     <AdMobBanner
-                        bannerSize="BANNER"
+                        bannerSize='banner'
                         adUnitID="ca-app-pub-7078093402554807/1621765327"
                         servePersonalizedAds
                         onDidFailToReceiveAdWithError={hideAdmobe}
+
                     />
                 </View>
             }

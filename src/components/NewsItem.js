@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react';
-import moment from 'moment';
+// import moment from 'moment';
+import moment from 'moment-timezone';
 import { useNavigation } from '@react-navigation/native';
 import { appTheme } from '../appTheme';
 
@@ -14,13 +15,13 @@ const NewsItem = ({ content }) => {
             <View style={styles.topRow}>
                 <Image
                     style={styles.image}
-                    source={{ uri: attributes.image }}
+                    source={{ uri: attributes?.image }}
                 />
-                <Text numberOfLines={2} style={styles.title}>{attributes.title}</Text>
+                <Text numberOfLines={2} style={styles.title}>{attributes?.title}</Text>
             </View>
             <View style={styles.belowRow}>
-                <Text style={styles.newsSource}>{attributes.publisher.data.attributes.name}</Text>
-                <Text style={styles.newsDate}>{moment(attributes.createdAt, "YYYYMMDD").fromNow()}</Text>
+                <Text style={styles.newsSource}>{attributes?.publisher?.data?.attributes?.name}</Text>
+                <Text style={styles.newsDate}>{moment(attributes?.createdAt).tz('Asia/Tehran').fromNow()}</Text>
             </View>
         </TouchableOpacity>
     )

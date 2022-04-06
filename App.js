@@ -5,13 +5,14 @@ import { Provider } from 'react-redux';
 import { rootStore } from './src/redux/store';
 import { StatusBar, View, StyleSheet, BackHandler, ToastAndroid } from 'react-native';
 import Netinfo from '@react-native-community/netinfo';
-
+import registerNNPushToken from 'native-notify';
 import AppNavigation from './src/AppNavigation'
 import { appTheme } from './src/appTheme';
 
 
 
 export default function App() {
+  registerNNPushToken(2436, 'YaYX9dzhIdwZ1xiDuvDR0G');
   const [connection, setConnection] = useState(true)
 
   const Toast = ({ visible, message }) => {
