@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "gon24",
-    "slug": "gon24",
+    "slug": "global-online-news24",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -27,13 +27,15 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#105fa0"
       },
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-7078093402554807~2010430528"
-      }
+      },
+      "package": "com.alibiyabani.globalonlinenews24"
     },
     "web": {
       "favicon": "./assets/favicon.png"
