@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, FlatList, Image, Dimensions, Pressable } from '
 import { useSelector } from 'react-redux'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { appTheme } from '../appTheme';
 
 const windowWidth = Dimensions.get('window').width;
@@ -16,12 +17,18 @@ const LastNews = () => {
         return (
             <Pressable style={styles.singleItem} onPress={() => navigation.navigate('DetailsScreen', { details: singleItem.attributes })}>
                 <View>
-                    <View style={styles.breakingNews}>
-                        <Text style={styles.breakingNewsText}>Breaking News</Text>
+                    <View style={styles.topWrapper}>
+                        <View style={styles.breakingNews}>
+                            <Text style={styles.breakingNewsText}>Breaking News</Text>
+                        </View>
                     </View>
                     <Image style={styles.image} source={{ uri: singleItem.attributes.image }} />
                     <Text numberOfLines={1} style={styles.title}>{singleItem.attributes.title}</Text>
                     <View style={styles.textBack}></View>
+                    <View style={styles.publisher}>
+                        <MaterialIcons name="verified" size={16} color={appTheme.colors.primary} style={{ paddingTop: 4 }} />
+                        <Text style={styles.publisherText}>{singleItem?.attributes?.publisher?.data?.attributes?.name}</Text>
+                    </View>
                 </View>
             </Pressable>
         )
@@ -54,13 +61,14 @@ const styles = StyleSheet.create({
         height: 150,
         resizeMode: 'cover',
         borderRadius: 4,
-        backgroundColor: 'transparent'
+        backgroundColor: appTheme.colors.border,
+        overflow: 'hidden'
     },
     textBack: {
         width: '100%',
         backgroundColor: '#fff',
         position: 'absolute',
-        height: 35,
+        height: 34.9,
         top: 115,
         overflow: 'hidden',
         borderBottomRightRadius: 4,
@@ -74,7 +82,8 @@ const styles = StyleSheet.create({
         left: 10,
         fontSize: 12,
         fontWeight: 'bold',
-        zIndex: 1
+        zIndex: 1,
+        paddingRight: 8
     },
     singleItem: {
         width: windowWidth,
@@ -104,5 +113,26 @@ const styles = StyleSheet.create({
         color: '#fff',
         paddingLeft: 6,
         paddingTop: 2
+    },
+    topWrapper: {
+        zIndex: 2,
+    },
+    publisher: {
+        position: 'absolute',
+        backgroundColor: '#fff',
+        flexDirection: 'row',
+        paddingHorizontal: 10,
+        height: 25,
+        bottom: 34,
+        right: 0,
+        borderTopLeftRadius: 4
+    },
+    publisherText: {
+        fontSize: 12,
+        color: '#000',
+        paddingLeft: 6,
+        fontWeight: '600',
+        paddingTop: 2
+
     }
 })

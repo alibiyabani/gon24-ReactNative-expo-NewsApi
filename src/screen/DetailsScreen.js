@@ -6,8 +6,11 @@ import { Fontisto } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { getNewsUrl } from '../redux/selectedNewsSlice'
 import { AdMobBanner } from 'expo-ads-admob';
+import { MaterialIcons } from '@expo/vector-icons';
+import moment from 'moment-timezone';
+import { Ionicons } from '@expo/vector-icons';
 
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const DetailsScreen = ({ route }) => {
@@ -18,22 +21,11 @@ const DetailsScreen = ({ route }) => {
 
     useEffect(() => {
         dispatch(getNewsUrl(details.newsUrl))
-        //storeData(details)
     }, [])
 
     const hideAdmobe = () => {
         setAdmobeState(false)
     }
-
-    // const storeData = async (values) => {
-    //     try {
-    //         const jsonValue = JSON.stringify(values)
-    //         await AsyncStorage.setItem('@news_List', jsonValue)
-    //     } catch (e) {
-    //         // saving error
-    //     }
-    // }
-
 
     return (
         <View style={styles.content}>
@@ -42,10 +34,24 @@ const DetailsScreen = ({ route }) => {
                 <View style={styles.iconBack}></View>
                 <Fontisto name="world-o" size={32} color='#FF1744' />
             </Pressable>
+            <View style={styles.news}>
+                <View style={styles.sourceWrapper}>
+                    <MaterialIcons name="verified" size={15} color={appTheme.colors.green} />
+                    <Text style={styles.newsSource}>{details?.publisher?.data?.attributes?.name}</Text>
+                </View>
+                <Text style={styles.newsDate}>{moment(details?.createdAt).tz('Asia/Tehran').fromNow()}</Text>
+            </View>
             <ScrollView style={styles.scrollView}>
                 <Text style={styles.title}>{details.title}</Text>
                 <Text style={styles.description}>{details.description}</Text>
                 <Text style={styles.body}>{details.body}</Text>
+                <Pressable style={styles.newsSourceDivider} onPress={() => navigation.navigate('WebViewScreen', { url: details.newsUrl })}>
+                    <Text style={styles.newsSourceDividerText}>News Source URL</Text>
+                </Pressable>
+                <Pressable style={styles.sourceLink} onPress={() => navigation.navigate('WebViewScreen', { url: details.newsUrl })}>
+                    <MaterialIcons name="verified" size={22} color={appTheme.colors.primary} />
+                    <Text style={styles.sourceLinkText}>{details.newsUrl}</Text>
+                </Pressable>
             </ScrollView>
             {admobeState &&
                 <View style={styles.adMob}>
@@ -77,7 +83,8 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         height: 200,
         resizeMode: 'cover',
-        margin: 4
+        margin: 4,
+        backgroundColor: '#fff'
     },
     icon: {
         position: 'absolute',
@@ -119,5 +126,51 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: appTheme.colors.background,
     },
+    news: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 12,
+        backgroundColor: appTheme.colors.primary
+    },
+    newsSource: {
+        fontSize: 12,
+        color: '#fff',
+        paddingLeft: 4
+
+    },
+    newsDate: {
+        fontSize: 12,
+        color: '#fff',
+    },
+    sourceWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    newsSourceDivider: {
+        backgroundColor: '#000',
+        height: 40,
+        width: 150,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 10
+
+    },
+    newsSourceDividerText: {
+        color: '#fff',
+        fontSize: 11,
+        padding: 8
+    },
+    sourceLink: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 24
+    },
+    sourceLinkText: {
+        color: appTheme.colors.shadow,
+        fontSize: 11,
+        paddingHorizontal: 10
+    }
 
 })

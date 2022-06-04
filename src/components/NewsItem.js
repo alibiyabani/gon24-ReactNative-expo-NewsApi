@@ -4,6 +4,7 @@ import React from 'react';
 import moment from 'moment-timezone';
 import { useNavigation } from '@react-navigation/native';
 import { appTheme } from '../appTheme';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 const NewsItem = ({ content }) => {
@@ -20,7 +21,10 @@ const NewsItem = ({ content }) => {
                 <Text numberOfLines={2} style={styles.title}>{attributes?.title}</Text>
             </View>
             <View style={styles.belowRow}>
-                <Text style={styles.newsSource}>{attributes?.publisher?.data?.attributes?.name}</Text>
+                <View style={styles.publisher}>
+                    <MaterialIcons name="verified" size={15} color={appTheme.colors.primary} />
+                    <Text style={styles.newsSource}>{attributes?.publisher?.data?.attributes?.name}</Text>
+                </View>
                 <Text style={styles.newsDate}>{moment(attributes?.createdAt).tz('Asia/Tehran').fromNow()}</Text>
             </View>
         </TouchableOpacity>
@@ -49,7 +53,8 @@ const styles = StyleSheet.create({
         width: 100,
         height: 60,
         borderRadius: 4,
-        resizeMode: 'cover'
+        resizeMode: 'cover',
+        backgroundColor: appTheme.colors.border
     },
     topRow: {
         flexDirection: 'row'
@@ -68,9 +73,15 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
     newsSource: {
-        fontSize: 11
+        fontSize: 11,
+        marginLeft: 4,
+        fontWeight: '700'
     },
     newsDate: {
         fontSize: 11
+    },
+    publisher: {
+        flexDirection: 'row',
+        alignItems: 'center'
     }
 })
